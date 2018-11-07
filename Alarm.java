@@ -5,9 +5,6 @@ import java.util.Date;
 public class Alarm extends Clock {
 
     private Calendar alarmTime = Calendar.getInstance();
-    private int year;
-    private int month;
-    private int day;
     private String alarmMesssage;
     //variables for validation purposes
     private int alarmYear;
@@ -146,8 +143,10 @@ public class Alarm extends Clock {
     }
 
     //toString Message
-    public String toString(Calendar alarmTime, String alarmMesssage){
-        return alarmMesssage + "\t\t\t" + ssdf.format(alarmTime.getTime());
+    public String toString(){
+        return ssdf.format(getAlarmTime()) + "\t\t\t" + getAlarmMesssage();
     }
+
+    //Alarm Methods
 
 }
