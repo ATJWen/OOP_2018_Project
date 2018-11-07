@@ -1,4 +1,4 @@
-//import java.time.YearMonth;
+import java.time.YearMonth;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -35,16 +35,16 @@ public class Alarm extends Clock {
         }
     }
 
-    //Uncomment this part
+
     public void setDay(int day, int month, int year){
-       /*YearMonth yearMonthObject = YearMonth.of(year, month);
+       YearMonth yearMonthObject = YearMonth.of(year, month); //code from javapointstutorials.com
        int daysInMonth = yearMonthObject.lengthOfMonth();
 
         if(day <= daysInMonth && day >= 1){
             this.alarmDay = day;
         }else{
             badData += "Invalid day\n";
-        }*/
+        }
     }
 
     public void setHour(int hour){
@@ -131,17 +131,23 @@ public class Alarm extends Clock {
     }
 
     //Constructors
-    public Alarm(int alarmYear, int alarmMonth, int alarmDay, int alarmHour, int alarmMinute, int alarmSecond, String alarmMesssage){
+    public Alarm(int alarmYear, int alarmMonth, int alarmDay, int alarmHour, int alarmMinute, int alarmSecond, String alarmMessage){
         this.alarmYear = alarmYear;
         this.alarmMonth = alarmMonth;
         this.alarmDay = alarmDay;
         this.alarmHour = alarmHour;
         this.alarmMinute = alarmMinute;
         this.alarmSecond = alarmSecond;
-        this.alarmMesssage = alarmMesssage;
+        this.alarmMesssage = alarmMessage;
     }
 
     public Alarm(){
-        this(1970,1,1,0,0,0, "");
+        this(Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.MONTH),Calendar.getInstance().get(Calendar.DATE),0,0,0, "");
     }
+
+    //toString Message
+    public String toString(Calendar alarmTime, String alarmMesssage){
+        return alarmMesssage + "\t\t\t" + ssdf.format(alarmTime.getTime());
+    }
+
 }

@@ -5,8 +5,8 @@ import java.util.Calendar;
 public class Clock {
 
     private static final DateFormat lsdf = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
-    private static final DateFormat ssdf = new SimpleDateFormat("hh:mm:ss a yyyy/MM/dd");
-    private Calendar datetime = Calendar.getInstance();
+    public static final DateFormat ssdf = new SimpleDateFormat("hh:mm:ss a yyyy/MM/dd");
+    public Calendar datetime = Calendar.getInstance();
     public int hour;
     public int minute;
     public int second;
