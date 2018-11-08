@@ -6,7 +6,7 @@ public class ClockThread extends Thread{
 
     private DigitalClock dc;
     private String time;
-    private DateFormat sdf = new SimpleDateFormat("hh:mm:ss a dd/MM/yyyy");
+    private DateFormat sdf = new SimpleDateFormat("HH:mm:ss  dd/MM/yyyy");
 
     public ClockThread(DigitalClock dc){
         this.dc = dc;

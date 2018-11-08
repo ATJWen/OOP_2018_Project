@@ -39,37 +39,37 @@ public class DigitalClock extends JFrame{
 
                 JPanel createAlarmPanel = new JPanel();
 
-                TextField tfHour = new TextField("00");
+                TextField tfHour = new TextField(newAlarm.getHour());
                 createAlarmPanel.add(tfHour);
                 int tfHourInt = Integer.parseInt(tfHour.getText());
 
                 createAlarmPanel.add(new JLabel(":"));
 
-                TextField tfMinute = new TextField("00");
+                TextField tfMinute = new TextField(newAlarm.getMinute());
                 createAlarmPanel.add(tfMinute);
                 int tfMinuteInt = Integer.parseInt(tfMinute.getText());
 
                 createAlarmPanel.add(new JLabel(":"));
 
-                TextField tfSecond = new TextField("00");
+                TextField tfSecond = new TextField(newAlarm.getSecond());
                 createAlarmPanel.add(tfSecond);
                 int tfSecondInt = Integer.parseInt(tfSecond.getText());
 
                 createAlarmPanel.add(new JLabel("\t\t"));
 
-                TextField tfDay = new TextField("00");
+                TextField tfDay = new TextField(newAlarm.getDay());
                 createAlarmPanel.add(tfDay);
                 int tfDayInt = Integer.parseInt(tfDay.getText());
 
                 createAlarmPanel.add(new JLabel("/"));
 
-                TextField tfMonth = new TextField("00");
+                TextField tfMonth = new TextField(newAlarm.getMonth());
                 createAlarmPanel.add(tfMonth);
                 int tfMonthInt = Integer.parseInt(tfMonth.getText());
 
                 createAlarmPanel.add(new JLabel("/"));
 
-                TextField tfYear = new TextField("00", 4);
+                TextField tfYear = new TextField(newAlarm.getYear(), 4);
                 createAlarmPanel.add(tfYear);
                 int tfYearInt = Integer.parseInt(tfYear.getText());
 
@@ -80,8 +80,22 @@ public class DigitalClock extends JFrame{
                 confirmAlarm.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        newAlarm.setAlarmTime(tfYearInt, tfMonthInt, tfDayInt, tfHourInt, tfMinuteInt, tfSecondInt);
-                        newAlarm.setAlarmMessage(jtaMessage.getText());
+                        newAlarm.setYear(tfYearInt);
+                        newAlarm.setMonth(tfMonthInt);
+                        newAlarm.setDay(tfDayInt, tfMonthInt, tfYearInt);
+                        newAlarm.setHour(tfHourInt);
+                        newAlarm.setMinute(tfMinuteInt);
+                        newAlarm.setSecond(tfSecondInt);
+
+                        if(newAlarm.getBadData() == "") {
+
+                            newAlarm.setAlarmTime(tfYearInt, tfMonthInt, tfDayInt, tfHourInt, tfMinuteInt, tfSecondInt);
+                            newAlarm.setAlarmMessage(jtaMessage.getText());
+                            JOptionPane.showMessageDialog(null, "Alarm Succesfully Created", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        }else{
+                            JOptionPane.showMessageDialog(null, newAlarm.getBadData(), "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+
                     }
                 });
                 createAlarmPanel.add(confirmAlarm);
@@ -101,7 +115,7 @@ public class DigitalClock extends JFrame{
         add(createTimerButton);
 
         setVisible(true);
-        setSize(400,150);
+        setSize(350,150);
         setResizable(false);
     }
 

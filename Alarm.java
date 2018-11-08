@@ -112,7 +112,7 @@ public class Alarm extends Clock {
 
     public String getBadData() {
         if(badData!="") {
-            return null;
+            return "";
         }//end if
         else {
             return badData;
