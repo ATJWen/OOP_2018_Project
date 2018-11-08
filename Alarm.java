@@ -5,7 +5,7 @@ import java.util.Date;
 public class Alarm extends Clock {
 
     private Calendar alarmTime = Calendar.getInstance();
-    private String alarmMesssage;
+    private String alarmMessage;
     //variables for validation purposes
     private int alarmYear;
     private int alarmMonth;
@@ -76,12 +76,12 @@ public class Alarm extends Clock {
         alarmTime.set(Calendar.SECOND, alarmSecond);
     }
 
-    public void setAlarmMesssage(String alarmMesssage){
-        if(alarmMesssage!=""){
-            this.alarmMesssage = alarmMesssage;
+    public void setAlarmMessage(String alarmMessage){
+        if(alarmMessage!=""){
+            this.alarmMessage = alarmMessage;
         }//end if
         else{
-            this.alarmMesssage = "No message";
+            this.alarmMessage = "No message";
         }//end else
     }
 
@@ -124,7 +124,7 @@ public class Alarm extends Clock {
     }
 
     public String getAlarmMesssage(){
-        return alarmMesssage;
+        return alarmMessage;
     }
 
     //Constructors
@@ -135,7 +135,7 @@ public class Alarm extends Clock {
         this.alarmHour = alarmHour;
         this.alarmMinute = alarmMinute;
         this.alarmSecond = alarmSecond;
-        this.alarmMesssage = alarmMessage;
+        this.alarmMessage = alarmMessage;
     }
 
     public Alarm(){
