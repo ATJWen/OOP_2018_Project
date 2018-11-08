@@ -15,9 +15,9 @@ public class ClockThread extends Thread{
 
     public void run(){
         while(true){
-            time = sdf.format(new Date());
+                time = sdf.format(new Date());
 
-            dc.jlabClock.setText(time);
+                dc.jlabClock.setText(time);
         }
     }
 }

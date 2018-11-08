@@ -7,7 +7,8 @@ public class DigitalClock extends JFrame{
 
     JLabel jlabClock;
     private ClockThread ct;
-    Alarm alarmList[] = new Alarm[];
+    //Alarm allAlarm[] = new Alarm[number];
+    //Alarm account;
 
     public DigitalClock(){
         jlabClock = new JLabel("Time");
@@ -28,6 +29,12 @@ public class DigitalClock extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                JFrame alarmGUI = new JFrame();
+                alarmGUI.setTitle("Create Alarm");
+                alarmGUI.setVisible(true);
+                alarmGUI.setSize(400,150);
+                alarmGUI.setResizable(false);
+                alarmGUI.setLocationRelativeTo(null);
             }
         });
         add(createAlarmButton);
