@@ -20,7 +20,7 @@ public class Alarm extends Clock {
         if(year >= Calendar.getInstance().get(Calendar.YEAR)){
             this.alarmYear = year;
         }else{
-            badData += "Invalid year\n";
+            this.badData += "Invalid year\n";
         }
     }
 
@@ -28,7 +28,7 @@ public class Alarm extends Clock {
         if(month <= 12 && month >= 1){
             this.alarmMonth = month;
         }else{
-            badData += "Invalid month\n";
+            this.badData += "Invalid month\n";
         }
     }
 
@@ -40,7 +40,7 @@ public class Alarm extends Clock {
         if(day <= daysInMonth && day >= 1){
             this.alarmDay = day;
         }else{
-            badData += "Invalid day\n";
+            this.badData += "Invalid day\n";
         }
     }
 
@@ -48,7 +48,7 @@ public class Alarm extends Clock {
         if(hour <= 23 && hour >= 0){
             this.alarmHour = hour;
         }else{
-            badData += "Invalid hour\n";
+            this.badData += "Invalid hour\n";
         }
     }
 
@@ -56,7 +56,7 @@ public class Alarm extends Clock {
         if(minute <= 59 && minute >= 0){
             this.alarmMinute = minute;
         }else{
-            badData += "Invalid minute\n";
+            this.badData += "Invalid minute\n";
         }
     }
 
@@ -64,7 +64,7 @@ public class Alarm extends Clock {
         if(second <= 59 && second >= 0){
             this.alarmSecond = second;
         }else{
-            badData += "Invalid second\n";
+            this.badData += "Invalid second\n";
         }
     }
 
@@ -111,19 +111,14 @@ public class Alarm extends Clock {
     }
 
     public String getBadData() {
-        if(badData!="") {
-            return "";
-        }//end if
-        else {
-            return badData;
-        }//end else
+        return badData;
     }
 
     public Calendar getAlarmTime() {
         return alarmTime;
     }
 
-    public String getAlarmMesssage(){
+    public String getAlarmMessage(){
         return alarmMessage;
     }
 
@@ -144,7 +139,7 @@ public class Alarm extends Clock {
 
     //toString Message
     public String toString(){
-        return ssdf.format(getAlarmTime()) + "\t\t\t" + getAlarmMesssage();
+        return getSsdf().format(getAlarmTime()) + "\n" + getAlarmMessage() + "\n\n";
     }
 
     //Alarm Methods

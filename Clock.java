@@ -5,15 +5,14 @@ import java.util.Calendar;
 
 public class Clock{
 
-    private static final DateFormat lsdf = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
-    public static final DateFormat ssdf = new SimpleDateFormat("hh:mm:ss a yyyy/MM/dd");
-    public Calendar datetime = Calendar.getInstance();
-    public String hour = Integer.toString(datetime.get(Calendar.HOUR));
-    public String minute = Integer.toString(datetime.get(Calendar.MINUTE));
-    public String second = Integer.toString(datetime.get(Calendar.SECOND));
-    public String year = Integer.toString(datetime.get(Calendar.YEAR));
-    public String month = Integer.toString(datetime.get(Calendar.MONTH));
-    public String day = Integer.toString(datetime.get(Calendar.DATE));
+    private static final DateFormat ssdf = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
+    private Calendar datetime = Calendar.getInstance();
+    private String hour = Integer.toString(datetime.get(Calendar.HOUR));
+    private String minute = Integer.toString(datetime.get(Calendar.MINUTE));
+    private String second = Integer.toString(datetime.get(Calendar.SECOND));
+    private String year = Integer.toString(datetime.get(Calendar.YEAR));
+    private String month = Integer.toString(datetime.get(Calendar.MONTH));
+    private String day = Integer.toString(datetime.get(Calendar.DATE));
 
     public String getHour() {
         return hour;
@@ -39,11 +38,8 @@ public class Clock{
         return day;
     }
 
-    public String getlDate() {
-        return lsdf.format(datetime.getTime());
+    public DateFormat getSsdf(){
+        return ssdf;
     }
 
-    public String getsDate() {
-        return ssdf.format(datetime.getTime());
-    }
 }

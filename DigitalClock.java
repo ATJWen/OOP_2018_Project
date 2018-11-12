@@ -2,13 +2,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class DigitalClock extends JFrame{
 
     JLabel jlabClock;
     private ClockThread ct;
-    //Alarm allAlarm[] = new Alarm[number];
-    //Alarm account;
+    //ArrayList<Alarm> alarmList = new ArrayList<Alarm>();
+    Alarm test = new Alarm();
 
     public DigitalClock(){
         jlabClock = new JLabel("Time");
@@ -39,19 +40,19 @@ public class DigitalClock extends JFrame{
 
                 JPanel createAlarmPanel = new JPanel();
 
-                TextField tfHour = new TextField(newAlarm.getHour());
+                TextField tfHour = new TextField("00");
                 createAlarmPanel.add(tfHour);
                 int tfHourInt = Integer.parseInt(tfHour.getText());
 
                 createAlarmPanel.add(new JLabel(":"));
 
-                TextField tfMinute = new TextField(newAlarm.getMinute());
+                TextField tfMinute = new TextField("00");
                 createAlarmPanel.add(tfMinute);
                 int tfMinuteInt = Integer.parseInt(tfMinute.getText());
 
                 createAlarmPanel.add(new JLabel(":"));
 
-                TextField tfSecond = new TextField(newAlarm.getSecond());
+                TextField tfSecond = new TextField("00");
                 createAlarmPanel.add(tfSecond);
                 int tfSecondInt = Integer.parseInt(tfSecond.getText());
 
@@ -87,14 +88,10 @@ public class DigitalClock extends JFrame{
                         newAlarm.setMinute(tfMinuteInt);
                         newAlarm.setSecond(tfSecondInt);
 
-                        if(newAlarm.getBadData() == "") {
-
-                            newAlarm.setAlarmTime(tfYearInt, tfMonthInt, tfDayInt, tfHourInt, tfMinuteInt, tfSecondInt);
-                            newAlarm.setAlarmMessage(jtaMessage.getText());
-                            JOptionPane.showMessageDialog(null, "Alarm Succesfully Created", "Success", JOptionPane.INFORMATION_MESSAGE);
-                        }else{
-                            JOptionPane.showMessageDialog(null, newAlarm.getBadData(), "Error", JOptionPane.ERROR_MESSAGE);
-                        }
+                        newAlarm.setAlarmTime(tfYearInt, tfMonthInt, tfDayInt, tfHourInt, tfMinuteInt, tfSecondInt);
+                        newAlarm.setAlarmMessage(jtaMessage.getText());
+                        test = newAlarm;
+                        JOptionPane.showMessageDialog(null, "Alarm Successfully Created", "Success", JOptionPane.INFORMATION_MESSAGE);
 
                     }
                 });
@@ -105,14 +102,14 @@ public class DigitalClock extends JFrame{
         });
         add(createAlarmButton);
 
-        JButton createTimerButton = new JButton("Create Timer");
-        createTimerButton.addActionListener(new ActionListener() {
+        JButton createViewAlarmButton = new JButton("View Alarms");
+        createViewAlarmButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                JOptionPane.showMessageDialog(null, test, "All Alarms", JOptionPane.INFORMATION_MESSAGE);
             }
         });
-        add(createTimerButton);
+        add(createViewAlarmButton);
 
         setVisible(true);
         setSize(350,150);
