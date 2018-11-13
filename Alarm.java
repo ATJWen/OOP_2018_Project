@@ -2,11 +2,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 //import java.time.YearMonth;
 import java.util.Calendar;
-import java.util.Date;
 
 public class Alarm extends Clock {
 
-    private DateFormat ssdf = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+    private DateFormat ssdf = new SimpleDateFormat("hh:mm:ss a dd/MM/yyyy");
     private Calendar alarmTime;
     private String alarmMessage;
     //variables for validation purposes
@@ -48,7 +47,7 @@ public class Alarm extends Clock {
     }
 
     public void setHour(int hour){
-        if(hour <= 23 && hour >= 0){
+        if(hour <= 24 && hour >= 0){
             this.alarmHour = hour;
         }else{
             this.badData += "Invalid hour\n";
@@ -72,11 +71,7 @@ public class Alarm extends Clock {
     }
 
     public void setAlarmTime(int alarmYear, int alarmMonth, int alarmDay, int alarmHour, int alarmMinute, int alarmSecond) {
-        Date date = new Date(alarmYear, alarmMonth, alarmDay);
-        alarmTime.setTime(date);
-        alarmTime.set(Calendar.HOUR, alarmHour);
-        alarmTime.set(Calendar.MINUTE, alarmMinute);
-        alarmTime.set(Calendar.SECOND, alarmSecond);
+        alarmTime.set(alarmYear, alarmMonth, alarmDay, alarmHour, alarmMinute, alarmSecond);
     }
 
     public void setAlarmMessage(String alarmMessage){
@@ -116,6 +111,7 @@ public class Alarm extends Clock {
     public int getAlarmSecond() {
         return alarmSecond;
     }
+
 
     public String getBadData() {
         return badData;

@@ -2,15 +2,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 public class DigitalClock extends JFrame{
 
     JLabel jlabClock;
     private ClockThread ct;
-    //ArrayList<Alarm> alarmList = new ArrayList<Alarm>();
+    ArrayList<Alarm> alarmList = new ArrayList<>();
 
-    public DigitalClock(){
+    public DigitalClock(){ //Begin DigitalClock class
         jlabClock = new JLabel("Time");
         setLayout(new FlowLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -21,13 +22,13 @@ public class DigitalClock extends JFrame{
         setLocationRelativeTo(null);
         ct = new ClockThread(this);
 
-        //getContentPane().setBackground(Color.BLACK);
-        //getContentPane().setForeground(Color.GREEN);
+        getContentPane().setBackground(Color.BLACK);
+        jlabClock.setForeground(Color.GREEN);
 
         JButton createAlarmButton = new JButton("Create Alarm");
-        createAlarmButton.addActionListener(new ActionListener() {
+        createAlarmButton.addActionListener(new ActionListener() { //begin alarmbutton action listener
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) { //begin alarmbutton actionPerformed
 
                 Alarm newAlarm = new Alarm();
 
@@ -39,7 +40,7 @@ public class DigitalClock extends JFrame{
 
                 JPanel createAlarmPanel = new JPanel();
 
-                TextField tfHour = new TextField("00");
+                TextField tfHour = new TextField(newAlarm.getHour());
                 createAlarmPanel.add(tfHour);
 
                 createAlarmPanel.add(new JLabel(":"));
@@ -51,6 +52,10 @@ public class DigitalClock extends JFrame{
 
                 TextField tfSecond = new TextField("00");
                 createAlarmPanel.add(tfSecond);
+
+                /*String[] meridien = {"AM", "PM"};
+                JComboBox meridienBox = new JComboBox(meridien);
+                createAlarmPanel.add(meridienBox);*/
 
                 createAlarmPanel.add(new JLabel("\t\t"));
 
@@ -72,9 +77,9 @@ public class DigitalClock extends JFrame{
                 createAlarmPanel.add(jtaMessage);
 
                 JButton confirmAlarm = new JButton("Create Alarm");
-                confirmAlarm.addActionListener(new ActionListener() {
+                confirmAlarm.addActionListener(new ActionListener() {  //begin confirmAlarm Action Listener
                     @Override
-                    public void actionPerformed(ActionEvent e) {
+                    public void actionPerformed(ActionEvent e) { //begin confirmAlarm action performed
 
                         int tfHourInt = Integer.parseInt(tfHour.getText());
                         int tfMinuteInt = Integer.parseInt(tfMinute.getText());
@@ -82,6 +87,7 @@ public class DigitalClock extends JFrame{
                         int tfDayInt = Integer.parseInt(tfDay.getText());
                         int tfMonthInt = Integer.parseInt(tfMonth.getText()) - 1;
                         int tfYearInt = Integer.parseInt(tfYear.getText());
+                        //String meridienBoxString = (String)meridienBox.getItemAt(meridienBox.getSelectedIndex());
                         newAlarm.setSecond(tfSecondInt);
                         newAlarm.setMinute(tfMinuteInt);
                         newAlarm.setHour(tfHourInt);
@@ -89,37 +95,45 @@ public class DigitalClock extends JFrame{
                         newAlarm.setMonth(tfMonthInt);
                         newAlarm.setYear(tfYearInt);
 
-                        if(newAlarm.getBadData() == "") {
+
+                        if(newAlarm.getBadData() == "") { //saves alarm into arraylist if no badData is found
                             newAlarm.setAlarmTime(tfYearInt, tfMonthInt, tfDayInt, tfHourInt, tfMinuteInt, tfSecondInt);
+                            //newAlarm.setAlarmMeridien(meridienBoxString);
                             newAlarm.setAlarmMessage(jtaMessage.getText());
+                            alarmList.add(newAlarm);
                             JOptionPane.showMessageDialog(null, "Alarm set to " + newAlarm.getAlarmTime(), "Success", JOptionPane.INFORMATION_MESSAGE);
-                        }else{
+                            alarmGUI.dispatchEvent(new WindowEvent(alarmGUI, WindowEvent.WINDOW_CLOSING));
+                        }else{  //displays error message
                             JOptionPane.showMessageDialog(null, newAlarm.getBadData(), "Invalid Data", JOptionPane.INFORMATION_MESSAGE);
                             newAlarm.setBadData();
-                        }
+                        } //end else
 
-                    }
-                });
+                    }//end confirmAlarm action performed
+                });  ////begin confirmAlarm Action Listener
                 createAlarmPanel.add(confirmAlarm);
 
                 alarmGUI.add(createAlarmPanel);
-            }
-        });
+            }  //end alarmbutton action performed
+        }); //end alarmbutton actionlistener
         add(createAlarmButton);
 
         JButton createViewAlarmButton = new JButton("View Alarms");
         createViewAlarmButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "", "All Alarms", JOptionPane.INFORMATION_MESSAGE);
-            }
-        });
+                String allAlarmList = "" ;
+                for(Alarm list : alarmList){
+                    allAlarmList += list.toString();
+                } //end for loop to print arraylist
+                JOptionPane.showMessageDialog(null, allAlarmList, "All Alarms", JOptionPane.INFORMATION_MESSAGE);
+            } //end view alarm action performed
+        });  //end view alarm action listener
         add(createViewAlarmButton);
 
         setVisible(true);
         setSize(350,150);
         setResizable(false);
-    }
+    }//close DigitalClock class
 
     public static void main(String[] args){
         new DigitalClock();
