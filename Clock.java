@@ -1,11 +1,7 @@
-import java.awt.event.ActionListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Clock{
 
-    private static final DateFormat ssdf = new SimpleDateFormat("HH:mm:ss yyyy/MM/dd");
     private Calendar datetime = Calendar.getInstance();
     private String hour = Integer.toString(datetime.get(Calendar.HOUR));
     private String minute = Integer.toString(datetime.get(Calendar.MINUTE));
@@ -36,10 +32,6 @@ public class Clock{
 
     public String getDay() {
         return day;
-    }
-
-    public DateFormat getSsdf(){
-        return ssdf;
     }
 
 }

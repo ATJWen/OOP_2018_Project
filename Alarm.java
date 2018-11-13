@@ -1,10 +1,13 @@
-import java.time.YearMonth;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+//import java.time.YearMonth;
 import java.util.Calendar;
 import java.util.Date;
 
 public class Alarm extends Clock {
 
-    private Calendar alarmTime = Calendar.getInstance();
+    private DateFormat ssdf = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+    private Calendar alarmTime;
     private String alarmMessage;
     //variables for validation purposes
     private int alarmYear;
@@ -25,7 +28,7 @@ public class Alarm extends Clock {
     }
 
     public void setMonth(int month){
-        if(month <= 12 && month >= 1){
+        if(month <= 12 && month >= 0){
             this.alarmMonth = month;
         }else{
             this.badData += "Invalid month\n";
@@ -34,10 +37,10 @@ public class Alarm extends Clock {
 
 
     public void setDay(int day, int month, int year){
-       YearMonth yearMonthObject = YearMonth.of(year, month); //code from javapointstutorials.com
-       int daysInMonth = yearMonthObject.lengthOfMonth();
+        //YearMonth yearMonthObject = YearMonth.of(year, month); //code from javapointstutorials.com
+        //int daysInMonth = yearMonthObject.lengthOfMonth();
 
-        if(day <= daysInMonth && day >= 1){
+        if(day <= 31 && day >= 1){
             this.alarmDay = day;
         }else{
             this.badData += "Invalid day\n";
@@ -85,6 +88,10 @@ public class Alarm extends Clock {
         }//end else
     }
 
+    public void setBadData(){
+        this.badData = "";
+    }
+
     //accessor methods
     public int getAlarmYear() {
         return alarmYear;
@@ -114,8 +121,8 @@ public class Alarm extends Clock {
         return badData;
     }
 
-    public Calendar getAlarmTime() {
-        return alarmTime;
+    public String getAlarmTime() {
+        return alarmTime.getTime().toString();
     }
 
     public String getAlarmMessage(){
@@ -123,23 +130,19 @@ public class Alarm extends Clock {
     }
 
     //Constructors
-    public Alarm(int alarmYear, int alarmMonth, int alarmDay, int alarmHour, int alarmMinute, int alarmSecond, String alarmMessage){
-        this.alarmYear = alarmYear;
-        this.alarmMonth = alarmMonth;
-        this.alarmDay = alarmDay;
-        this.alarmHour = alarmHour;
-        this.alarmMinute = alarmMinute;
-        this.alarmSecond = alarmSecond;
+    public Alarm(Calendar alarmTime, String alarmMessage){
+        this.alarmTime = alarmTime;
         this.alarmMessage = alarmMessage;
     }
 
     public Alarm(){
-        this(Calendar.getInstance().get(Calendar.YEAR),Calendar.getInstance().get(Calendar.MONTH),Calendar.getInstance().get(Calendar.DATE),0,0,0, "");
+        this(Calendar.getInstance(), "No Message");
     }
 
     //toString Message
+    @Override
     public String toString(){
-        return getSsdf().format(getAlarmTime()) + "\n" + getAlarmMessage() + "\n\n";
+        return getAlarmTime() + "\n" + getAlarmMessage() + "\n\n";
     }
 
     //Alarm Methods
