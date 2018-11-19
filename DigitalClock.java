@@ -5,6 +5,25 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
+/*JB Advice - these are things you could add to your application to beef it up
+ *
+ *ensure that no 2 Alarm objects have values that are exactly the same values
+ *
+ *allow a "snooze" feature on your alarm so that, when it goes off, you have the choice to snooze for
+ *a certain amount of time before it goes off again - the user could be allowed to enter the snooze time
+ *if you like
+ *
+ *When the alarm does go off, and should the user decide to "stop" rather than "snooze" then the alarm
+ *object should be removed from the array list of Alarm objects
+ *
+ *Fix up the validation so that the user cannot set alarm for days and months in the past
+ *
+ *Play an audio file when the alarm goes off - you could have your alarm set up so that the
+ *user is given the choice to wake up to a "beep"-type sound or a song (could be randomised)
+ *You can use the AudioFilePlayer class to play the sound file
+ *
+ */
+
 public class DigitalClock extends JFrame{
 
     JLabel jlabClock;
@@ -40,7 +59,7 @@ public class DigitalClock extends JFrame{
 
                 JPanel createAlarmPanel = new JPanel();
 
-                TextField tfHour = new TextField(newAlarm.getHour());
+                TextField tfHour = new TextField("00");
                 createAlarmPanel.add(tfHour);
 
                 createAlarmPanel.add(new JLabel(":"));
@@ -53,9 +72,9 @@ public class DigitalClock extends JFrame{
                 TextField tfSecond = new TextField("00");
                 createAlarmPanel.add(tfSecond);
 
-                /*String[] meridien = {"AM", "PM"};
+                String[] meridien = {"AM", "PM"};
                 JComboBox meridienBox = new JComboBox(meridien);
-                createAlarmPanel.add(meridienBox);*/
+                createAlarmPanel.add(meridienBox);
 
                 createAlarmPanel.add(new JLabel("\t\t"));
 
@@ -80,28 +99,29 @@ public class DigitalClock extends JFrame{
                 confirmAlarm.addActionListener(new ActionListener() {  //begin confirmAlarm Action Listener
                     @Override
                     public void actionPerformed(ActionEvent e) { //begin confirmAlarm action performed
-
+                        System.out.println(tfHour.getText());
                         int tfHourInt = Integer.parseInt(tfHour.getText());
                         int tfMinuteInt = Integer.parseInt(tfMinute.getText());
                         int tfSecondInt = Integer.parseInt(tfSecond.getText());
                         int tfDayInt = Integer.parseInt(tfDay.getText());
                         int tfMonthInt = Integer.parseInt(tfMonth.getText()) - 1;
                         int tfYearInt = Integer.parseInt(tfYear.getText());
-                        //String meridienBoxString = (String)meridienBox.getItemAt(meridienBox.getSelectedIndex());
+                        String meridienBoxString = (String)meridienBox.getItemAt(meridienBox.getSelectedIndex());
+                        System.out.println(meridienBoxString);
                         newAlarm.setSecond(tfSecondInt);
                         newAlarm.setMinute(tfMinuteInt);
                         newAlarm.setHour(tfHourInt);
                         newAlarm.setDay(tfDayInt, Integer.parseInt(tfMonth.getText()), tfYearInt);
                         newAlarm.setMonth(tfMonthInt);
                         newAlarm.setYear(tfYearInt);
+                        newAlarm.setAlarmMeridien(meridienBoxString);
 
-
-                        if(newAlarm.getBadData() == "") { //saves alarm into arraylist if no badData is found
-                            newAlarm.setAlarmTime(tfYearInt, tfMonthInt, tfDayInt, tfHourInt, tfMinuteInt, tfSecondInt);
-                            //newAlarm.setAlarmMeridien(meridienBoxString);
+                        //JB Modified code - updated test from using == to using .equals() here
+                        if(newAlarm.getBadData().equals("")) { //saves alarm into arraylist if no badData is found
+                            newAlarm.setAlarmTime(tfYearInt, tfMonthInt, tfDayInt, tfHourInt, tfMinuteInt, tfSecondInt,meridienBoxString);
                             newAlarm.setAlarmMessage(jtaMessage.getText());
                             alarmList.add(newAlarm);
-                            JOptionPane.showMessageDialog(null, "Alarm set to " + newAlarm.getAlarmTime(), "Success", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Alarm set to " + newAlarm.getAlarmTime() /*+ newAlarm.getAlarmMeridien()*/, "Success", JOptionPane.INFORMATION_MESSAGE);
                             alarmGUI.dispatchEvent(new WindowEvent(alarmGUI, WindowEvent.WINDOW_CLOSING));
                         }else{  //displays error message
                             JOptionPane.showMessageDialog(null, newAlarm.getBadData(), "Invalid Data", JOptionPane.INFORMATION_MESSAGE);
