@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 //import java.time.YearMonth;
@@ -5,7 +6,7 @@ import java.util.*;
 
 public class Alarm extends Clock {
 
-    private DateFormat ssdf = new SimpleDateFormat("hh:mm:ss a dd/MM/yyyy");
+    private DateFormat sdf = new SimpleDateFormat("hh:mm:ss a dd/MM/yyyy");
 
     /*JB Advice - do you really need this attribute alarmTime
      *since you are already keeping the time associated with the Alarm object
@@ -86,7 +87,7 @@ public class Alarm extends Clock {
 
     public void setAlarmMeridien(String alarmMeridien)
     {
-        if(alarmMeridien.equals("AM") && alarmHour<=12 || alarmHour>0 && alarmMeridien.equals("PM"))
+        if(alarmMeridien.equals("a.m") && alarmHour<=12 || alarmHour>0 && alarmMeridien.equals("p.m"))
             this.alarmMeridien = alarmMeridien;
         else
             badData += "Invalid meridien value\n";
@@ -102,7 +103,7 @@ public class Alarm extends Clock {
         this.alarmTime.set(alarmYear, alarmMonth, alarmDay, alarmHour, alarmMinute, alarmSecond);
         //System.out.println(alarmHour);
         //Code added here by JB to set the AM/PM value of the alarmTime object
-        if(alarmMeridien.equals("AM"))
+        if(alarmMeridien.equals("a.m"))
             alarmTime.set(Calendar.AM_PM,Calendar.AM);
         else
             alarmTime.set(Calendar.AM_PM,Calendar.PM);
@@ -153,6 +154,11 @@ public class Alarm extends Clock {
         return badData;
     }
 
+    public Date getAlarmDate(){
+        Date d = alarmTime.getTime();
+        return d;
+    }
+
     public String getAlarmTime() {
         //return alarmTime.getTime().toString();
         //Code added by JB to render the alarm setting in a particular way, padding with zeroes where necessary and including the meridien value
@@ -189,5 +195,8 @@ public class Alarm extends Clock {
     }
 
     //Alarm Methods
+    public void ring(){
+        JOptionPane.showMessageDialog(null, toString(), "Alarm", JOptionPane.INFORMATION_MESSAGE);
+    }
 
 }

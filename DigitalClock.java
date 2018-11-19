@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.util.Timer;
 import java.util.ArrayList;
 
 /*JB Advice - these are things you could add to your application to beef it up
@@ -26,9 +27,9 @@ import java.util.ArrayList;
 
 public class DigitalClock extends JFrame{
 
-    JLabel jlabClock;
+    static JLabel jlabClock;
     private ClockThread ct;
-    ArrayList<Alarm> alarmList = new ArrayList<>();
+    private static ArrayList<Alarm> alarmList = new ArrayList<>();
 
     public DigitalClock(){ //Begin DigitalClock class
         jlabClock = new JLabel("Time");
@@ -72,7 +73,7 @@ public class DigitalClock extends JFrame{
                 TextField tfSecond = new TextField("00");
                 createAlarmPanel.add(tfSecond);
 
-                String[] meridien = {"AM", "PM"};
+                String[] meridien = {"a.m", "p.m"};
                 JComboBox meridienBox = new JComboBox(meridien);
                 createAlarmPanel.add(meridienBox);
 
@@ -121,7 +122,7 @@ public class DigitalClock extends JFrame{
                             newAlarm.setAlarmTime(tfYearInt, tfMonthInt, tfDayInt, tfHourInt, tfMinuteInt, tfSecondInt,meridienBoxString);
                             newAlarm.setAlarmMessage(jtaMessage.getText());
                             alarmList.add(newAlarm);
-                            JOptionPane.showMessageDialog(null, "Alarm set to " + newAlarm.getAlarmTime() /*+ newAlarm.getAlarmMeridien()*/, "Success", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Alarm set to " + newAlarm.getAlarmTime(), "Success", JOptionPane.INFORMATION_MESSAGE);
                             alarmGUI.dispatchEvent(new WindowEvent(alarmGUI, WindowEvent.WINDOW_CLOSING));
                         }else{  //displays error message
                             JOptionPane.showMessageDialog(null, newAlarm.getBadData(), "Invalid Data", JOptionPane.INFORMATION_MESSAGE);
@@ -157,5 +158,15 @@ public class DigitalClock extends JFrame{
 
     public static void main(String[] args){
         new DigitalClock();
+        boolean runningclock = true;
+
+        while(runningclock) {
+            for (Alarm list : alarmList) {
+                    Timer timer = new Timer();
+                    timer.schedule(list.ring(), list.getAlarmDate());
+                }
+            }
+        }
     }
+
 }
