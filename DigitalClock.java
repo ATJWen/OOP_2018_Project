@@ -1,10 +1,14 @@
+import org.apache.commons.io.FileUtils;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.Timer;
 import java.util.ArrayList;
+import java.util.TimerTask;
 
 /*JB Advice - these are things you could add to your application to beef it up
  *
@@ -73,7 +77,7 @@ public class DigitalClock extends JFrame{
                 TextField tfSecond = new TextField("00");
                 createAlarmPanel.add(tfSecond);
 
-                String[] meridien = {"a.m", "p.m"};
+                String[] meridien = {"AM", "PM"};
                 JComboBox meridienBox = new JComboBox(meridien);
                 createAlarmPanel.add(meridienBox);
 
@@ -142,7 +146,7 @@ public class DigitalClock extends JFrame{
         createViewAlarmButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String allAlarmList = "" ;
+                String allAlarmList = "List of All Alarms Created\n" ;
                 for(Alarm list : alarmList){
                     allAlarmList += list.toString();
                 } //end for loop to print arraylist
@@ -151,6 +155,15 @@ public class DigitalClock extends JFrame{
         });  //end view alarm action listener
         add(createViewAlarmButton);
 
+        JButton saveAlarmButton = new JButton("Save Alarms");
+        saveAlarmButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FileUtils.writeLines(new File("input.txt"), alarmList);
+            } //end view alarm action performed
+        });  //end view alarm action listener
+        add(saveAlarmButton);
+
         setVisible(true);
         setSize(350,150);
         setResizable(false);
@@ -158,15 +171,6 @@ public class DigitalClock extends JFrame{
 
     public static void main(String[] args){
         new DigitalClock();
-        boolean runningclock = true;
-
-        while(runningclock) {
-            for (Alarm list : alarmList) {
-                    Timer timer = new Timer();
-                    timer.schedule(list.ring(), list.getAlarmDate());
-                }
-            }
-        }
     }
 
 }

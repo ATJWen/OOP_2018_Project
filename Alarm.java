@@ -58,7 +58,7 @@ public class Alarm extends Clock {
     }
 
     public void setHour(int hour){
-        if(hour <= 24 && hour >= 0){
+        if(hour <= 12 && hour >= 1){
             this.alarmHour = hour;
         }else{
             this.badData += "Invalid hour\n";
@@ -87,7 +87,7 @@ public class Alarm extends Clock {
 
     public void setAlarmMeridien(String alarmMeridien)
     {
-        if(alarmMeridien.equals("a.m") && alarmHour<=12 || alarmHour>0 && alarmMeridien.equals("p.m"))
+        if(alarmMeridien.equals("AM") || alarmMeridien.equals("PM"))
             this.alarmMeridien = alarmMeridien;
         else
             badData += "Invalid meridien value\n";
@@ -103,7 +103,7 @@ public class Alarm extends Clock {
         this.alarmTime.set(alarmYear, alarmMonth, alarmDay, alarmHour, alarmMinute, alarmSecond);
         //System.out.println(alarmHour);
         //Code added here by JB to set the AM/PM value of the alarmTime object
-        if(alarmMeridien.equals("a.m"))
+        if(alarmMeridien.equals("AM"))
             alarmTime.set(Calendar.AM_PM,Calendar.AM);
         else
             alarmTime.set(Calendar.AM_PM,Calendar.PM);
@@ -164,7 +164,7 @@ public class Alarm extends Clock {
         //Code added by JB to render the alarm setting in a particular way, padding with zeroes where necessary and including the meridien value
         //You may want to render it differently Aaron so feel free to do so
 
-        return String.format("%02d",alarmTime.get(Calendar.HOUR)) + ":" + String.format("%02d",alarmTime.get(Calendar.MINUTE)) + ":" + String.format("%02d",alarmTime.get(Calendar.SECOND)) + " " + getAlarmMeridien() +
+        return String.format("%02d",alarmTime.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d",alarmTime.get(Calendar.MINUTE)) + ":" + String.format("%02d",alarmTime.get(Calendar.SECOND)) + " " + getAlarmMeridien() +
                 "   " + String.format("%02d",alarmTime.get(Calendar.DATE)) + "/" + String.format("%02d",alarmTime.get(Calendar.MONTH)+1) + "/" + String.format("%d",alarmTime.get(Calendar.YEAR));
     }
 
@@ -197,6 +197,7 @@ public class Alarm extends Clock {
     //Alarm Methods
     public void ring(){
         JOptionPane.showMessageDialog(null, toString(), "Alarm", JOptionPane.INFORMATION_MESSAGE);
+        //AudioFilePlayer.playAudio();
     }
 
 }
