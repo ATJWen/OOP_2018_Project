@@ -30,7 +30,6 @@ import java.util.TimerTask;
 public class DigitalClock extends JFrame{
 
     static JLabel jlabClock;
-    private ClockThread ct;
     private static ArrayList<Alarm> alarmList = new ArrayList<>();
 
     public DigitalClock(){ //Begin DigitalClock class
@@ -42,7 +41,7 @@ public class DigitalClock extends JFrame{
         add(jlabClock);
         pack();
         setLocationRelativeTo(null);
-        ct = new ClockThread(this);
+        ClockThread ct = new ClockThread(this);
 
         getContentPane().setBackground(Color.BLACK);
         jlabClock.setForeground(Color.GREEN);
