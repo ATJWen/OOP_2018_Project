@@ -1,5 +1,3 @@
-import org.apache.commons.io.FileUtils;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -104,7 +102,6 @@ public class DigitalClock extends JFrame{
                 confirmAlarm.addActionListener(new ActionListener() {  //begin confirmAlarm Action Listener
                     @Override
                     public void actionPerformed(ActionEvent e) { //begin confirmAlarm action performed
-                        System.out.println(tfHour.getText());
                         int tfHourInt = Integer.parseInt(tfHour.getText());
                         int tfMinuteInt = Integer.parseInt(tfMinute.getText());
                         int tfSecondInt = Integer.parseInt(tfSecond.getText());
@@ -112,7 +109,6 @@ public class DigitalClock extends JFrame{
                         int tfMonthInt = Integer.parseInt(tfMonth.getText()) - 1;
                         int tfYearInt = Integer.parseInt(tfYear.getText());
                         String meridienBoxString = (String)meridienBox.getItemAt(meridienBox.getSelectedIndex());
-                        System.out.println(meridienBoxString);
                         newAlarm.setSecond(tfSecondInt);
                         newAlarm.setMinute(tfMinuteInt);
                         newAlarm.setHour(tfHourInt);
@@ -126,8 +122,9 @@ public class DigitalClock extends JFrame{
                             newAlarm.setAlarmTime(tfYearInt, tfMonthInt, tfDayInt, tfHourInt, tfMinuteInt, tfSecondInt,meridienBoxString);
                             newAlarm.setAlarmMessage(jtaMessage.getText());
                             alarmList.add(newAlarm);
-                            JOptionPane.showMessageDialog(null, "Alarm set to " + newAlarm.getAlarmTime(), "Success", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Alarm set to " + newAlarm.getAlarmTimeString(), "Success", JOptionPane.INFORMATION_MESSAGE);
                             alarmGUI.dispatchEvent(new WindowEvent(alarmGUI, WindowEvent.WINDOW_CLOSING));
+                            System.out.println(newAlarm.getAlarmTime());
                         }else{  //displays error message
                             JOptionPane.showMessageDialog(null, newAlarm.getBadData(), "Invalid Data", JOptionPane.INFORMATION_MESSAGE);
                             newAlarm.setBadData();
@@ -154,15 +151,6 @@ public class DigitalClock extends JFrame{
             } //end view alarm action performed
         });  //end view alarm action listener
         add(createViewAlarmButton);
-
-        JButton saveAlarmButton = new JButton("Save Alarms");
-        saveAlarmButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                FileUtils.writeLines(new File("input.txt"), alarmList);
-            } //end view alarm action performed
-        });  //end view alarm action listener
-        add(saveAlarmButton);
 
         setVisible(true);
         setSize(350,150);

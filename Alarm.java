@@ -101,7 +101,6 @@ public class Alarm extends Clock {
         alarmTime.clear(); //added by JB to fix a spurious error with the alarmTime object's hour value
 
         this.alarmTime.set(alarmYear, alarmMonth, alarmDay, alarmHour, alarmMinute, alarmSecond);
-        //System.out.println(alarmHour);
         //Code added here by JB to set the AM/PM value of the alarmTime object
         if(alarmMeridien.equals("AM"))
             alarmTime.set(Calendar.AM_PM,Calendar.AM);
@@ -124,31 +123,6 @@ public class Alarm extends Clock {
         this.badData = "";
     }
 
-    //accessor methods
-    public int getAlarmYear() {
-        return alarmYear;
-    }
-
-    public int getAlarmMonth() {
-        return alarmMonth;
-    }
-
-    public int getAlarmDay() {
-        return alarmDay;
-    }
-
-    public int getAlarmHour() {
-        return alarmHour;
-    }
-
-    public int getAlarmMinute() {
-        return alarmMinute;
-    }
-
-    public int getAlarmSecond() {
-        return alarmSecond;
-    }
-
 
     public String getBadData() {
         return badData;
@@ -159,7 +133,7 @@ public class Alarm extends Clock {
         return d;
     }
 
-    public String getAlarmTime() {
+    public String getAlarmTimeString() {
         //return alarmTime.getTime().toString();
         //Code added by JB to render the alarm setting in a particular way, padding with zeroes where necessary and including the meridien value
         //You may want to render it differently Aaron so feel free to do so
@@ -170,6 +144,10 @@ public class Alarm extends Clock {
 
     public String getAlarmMessage(){
         return alarmMessage;
+    }
+
+    public Calendar getAlarmTime(){
+        return alarmTime;
     }
 
     //JB added this accessor to retrieve meridien value of alarm
@@ -191,7 +169,7 @@ public class Alarm extends Clock {
     //toString Message
     @Override
     public String toString(){
-        return getAlarmTime() + "\n" + getAlarmMessage() + "\n\n";
+        return getAlarmTimeString() + "\n" + getAlarmMessage() + "\n\n";
     }
 
     //Alarm Methods
