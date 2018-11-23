@@ -29,7 +29,7 @@ import java.util.TimerTask;
 
 public class DigitalClock extends JFrame{
 
-    static JLabel jlabClock;
+    JLabel jlabClock;
     private static ArrayList<Alarm> alarmList = new ArrayList<>();
 
     public DigitalClock(){ //Begin DigitalClock class
