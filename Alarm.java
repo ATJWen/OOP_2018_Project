@@ -1,3 +1,8 @@
+/**
+ * @author Aaron Tan
+ * @version 1.0
+ */
+
 import javax.swing.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -6,7 +11,7 @@ import java.util.*;
 
 public class Alarm extends Clock {
 
-    private DateFormat sdf = new SimpleDateFormat("hh:mm:ss a dd/MM/yyyy");
+    //private DateFormat sdf = new SimpleDateFormat("hh:mm:ss a dd/MM/yyyy");
 
     /*JB Advice - do you really need this attribute alarmTime
      *since you are already keeping the time associated with the Alarm object
@@ -29,6 +34,10 @@ public class Alarm extends Clock {
     private String alarmMeridien; //added by JB for the meridien attribute of the alarm clock
 
     //mutators
+
+    /**
+     * @param year the year for the alarm
+     */
     public void setYear(int year){
         if(year >= Calendar.getInstance().get(Calendar.YEAR)){
             this.alarmYear = year;
@@ -37,6 +46,9 @@ public class Alarm extends Clock {
         }
     }
 
+    /**
+     * @param month the month for the alarm
+     */
     public void setMonth(int month){
         if(month <= 12 && month >= 0){
             this.alarmMonth = month;
@@ -46,6 +58,11 @@ public class Alarm extends Clock {
     }
 
 
+    /**
+     * @param day the day for the alarm
+     * @param month the month that the alarm is set. Used for validation purposes
+     * @param year the year that the alarm is set. Used for validation purposes
+     */
     public void setDay(int day, int month, int year){
         //YearMonth yearMonthObject = YearMonth.of(year, month); //code from javapointstutorials.com
         //int daysInMonth = yearMonthObject.lengthOfMonth();
@@ -57,6 +74,9 @@ public class Alarm extends Clock {
         }
     }
 
+    /**
+     * @param hour the hour for the alarm
+     */
     public void setHour(int hour){
         if(hour <= 12 && hour >= 1){
             this.alarmHour = hour;
@@ -65,6 +85,10 @@ public class Alarm extends Clock {
         }
     }
 
+    /**
+     *
+     * @param minute the minute for the alarm
+     */
     public void setMinute(int minute){
         if(minute <= 59 && minute >= 0){
             this.alarmMinute = minute;
@@ -73,6 +97,10 @@ public class Alarm extends Clock {
         }
     }
 
+    /**
+     *
+     * @param second the second for the alarm
+     */
     public void setSecond(int second){
         if(second <= 59 && second >= 0){
             this.alarmSecond = second;
@@ -85,6 +113,10 @@ public class Alarm extends Clock {
     //So if, for example, the user tries to set the alarm to 14:12:11 AM, it will raise a red flag
     //and not set the alarm unless the user changes the meridien to PM instead
 
+    /**
+     *
+     * @param alarmMeridien the meridien for the alarm. either AM or PM
+     */
     public void setAlarmMeridien(String alarmMeridien)
     {
         if(alarmMeridien.equals("AM") || alarmMeridien.equals("PM"))
@@ -94,8 +126,15 @@ public class Alarm extends Clock {
     }
 
 
-
-
+    /**
+     * @param alarmYear the year for the alarm
+     * @param alarmMonth the month for the alarm
+     * @param alarmDay the day for the alarm
+     * @param alarmHour the hour for the alarm
+     * @param alarmMinute the minute for the alarm
+     * @param alarmSecond the second for the alarm
+     * @param alarmMeridien the meridien for the alarm. either AM or PM
+     */
     public void setAlarmTime(int alarmYear, int alarmMonth, int alarmDay, int alarmHour, int alarmMinute, int alarmSecond,String alarmMeridien) {
 
         alarmTime.clear(); //added by JB to fix a spurious error with the alarmTime object's hour value
@@ -110,6 +149,10 @@ public class Alarm extends Clock {
     }
 
     //Small modification by JB to fix logical error
+
+    /**
+     * @param alarmMessage the message to be saved with the alarm
+     */
     public void setAlarmMessage(String alarmMessage){
         if(alarmMessage.equals("")){
             this.alarmMessage = alarmMessage;
@@ -119,20 +162,25 @@ public class Alarm extends Clock {
         }//end else
     }
 
+    /**
+     * To set a messsage indicating which inputs are invalid
+     */
     public void setBadData(){
         this.badData = "";
     }
 
 
+    /**
+     * @return an error message if the inputs are not valid
+     */
     public String getBadData() {
         return badData;
     }
 
-    public Date getAlarmDate(){
-        Date d = alarmTime.getTime();
-        return d;
-    }
 
+    /**
+     * @return the alarm time set in a String format
+     */
     public String getAlarmTimeString() {
         //return alarmTime.getTime().toString();
         //Code added by JB to render the alarm setting in a particular way, padding with zeroes where necessary and including the meridien value
@@ -142,21 +190,39 @@ public class Alarm extends Clock {
                 "   " + String.format("%02d",alarmTime.get(Calendar.DATE)) + "/" + String.format("%02d",alarmTime.get(Calendar.MONTH)+1) + "/" + String.format("%d",alarmTime.get(Calendar.YEAR));
     }
 
+    /**
+     *
+     * @return the message set in the alarm
+     */
     public String getAlarmMessage(){
         return alarmMessage;
     }
 
+    /**
+     *
+     * @return the alarm time
+     */
     public Calendar getAlarmTime(){
         return alarmTime;
     }
 
     //JB added this accessor to retrieve meridien value of alarm
+
+    /**
+     *
+     * @return the alarm meridien
+     */
     public String getAlarmMeridien()
     {
         return alarmMeridien;
     }
 
     //Constructors
+
+    /**
+     * @param alarmTime the alarm time to set
+     * @param alarmMessage the message for the alarm
+     */
     public Alarm(Calendar alarmTime, String alarmMessage){
         this.alarmTime = alarmTime;
         this.alarmMessage = alarmMessage;
@@ -167,12 +233,21 @@ public class Alarm extends Clock {
     }
 
     //toString Message
+
+    /**
+     *
+     * @return the alarm time and message together.
+     */
     @Override
     public String toString(){
         return getAlarmTimeString() + "\n" + getAlarmMessage() + "\n\n";
     }
 
     //Alarm Methods
+
+    /**
+     * To allow the alarm to ring when the set time has arrived.
+     */
     public void ring(){
         JOptionPane.showMessageDialog(null, toString(), "Alarm", JOptionPane.INFORMATION_MESSAGE);
         //AudioFilePlayer.playAudio();
