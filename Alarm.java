@@ -4,12 +4,13 @@
  */
 
 import javax.swing.*;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 //import java.time.YearMonth;
 import java.util.*;
 
-public class Alarm extends Clock {
+public class Alarm extends Clock implements Serializable{
 
     //private DateFormat sdf = new SimpleDateFormat("hh:mm:ss a dd/MM/yyyy");
 
