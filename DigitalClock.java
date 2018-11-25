@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
-import java.io.File;
+import java.io.*;
 import java.util.Timer;
 import java.util.ArrayList;
 import java.util.TimerTask;
@@ -29,6 +29,7 @@ import java.util.TimerTask;
 
 public class DigitalClock extends JFrame{
 
+    String fileName = "AlarmFile.bin";
     JLabel jlabClock;
     private static ArrayList<Alarm> alarmList = new ArrayList<>();
 
@@ -51,7 +52,7 @@ public class DigitalClock extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) { //begin alarmbutton actionPerformed
 
-                Alarm newAlarm = new Alarm();
+                final Alarm newAlarm = new Alarm();
 
                 JFrame alarmGUI = new JFrame();
                 alarmGUI.setTitle("Create Alarm");
@@ -121,9 +122,24 @@ public class DigitalClock extends JFrame{
                             newAlarm.setAlarmTime(tfYearInt, tfMonthInt, tfDayInt, tfHourInt, tfMinuteInt, tfSecondInt,meridienBoxString);
                             newAlarm.setAlarmMessage(jtaMessage.getText());
                             alarmList.add(newAlarm);
+                            //Writing to a file
+                            try{
+                                ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fileName));
+                                os.writeObject(newAlarm);
+                                os.close();
+                            }
+
+                            catch(FileNotFoundException e1){
+                                e1.printStackTrace();
+                            }
+
+                            catch(IOException e1){
+                                e1.printStackTrace();
+                            }
+
+                            //Shows a message indicating the object was saved
                             JOptionPane.showMessageDialog(null, "Alarm set to " + newAlarm.getAlarmTimeString(), "Success", JOptionPane.INFORMATION_MESSAGE);
                             alarmGUI.dispatchEvent(new WindowEvent(alarmGUI, WindowEvent.WINDOW_CLOSING));
-                            System.out.println(newAlarm.getAlarmTime());
                         }else{  //displays error message
                             JOptionPane.showMessageDialog(null, newAlarm.getBadData(), "Invalid Data", JOptionPane.INFORMATION_MESSAGE);
                             newAlarm.setBadData();
@@ -138,18 +154,40 @@ public class DigitalClock extends JFrame{
         }); //end alarmbutton actionlistener
         add(createAlarmButton);
 
-        JButton createViewAlarmButton = new JButton("View Alarms");
-        createViewAlarmButton.addActionListener(new ActionListener() {
+        JButton viewAlarmButton = new JButton("View Alarms");
+        viewAlarmButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String allAlarmList = "List of All Alarms Created\n" ;
-                for(Alarm list : alarmList){
-                    allAlarmList += list.toString();
-                } //end for loop to print arraylist
+
+                try {
+                    ObjectInputStream is = new ObjectInputStream(new FileInputStream(fileName));
+                    Alarm a = (Alarm) is.readObject();
+                    alarmList.add(a);
+                    is.close();
+
+                    for(Alarm list : alarmList){
+                        allAlarmList += list.toString();
+                    } //end for loop to print arraylist
+                }
+
+                catch(FileNotFoundException e1){
+                    e1.printStackTrace();
+                }
+
+                catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+                catch (ClassNotFoundException e1) {
+                    e1.printStackTrace();
+                }
+
+
                 JOptionPane.showMessageDialog(null, allAlarmList, "All Alarms", JOptionPane.INFORMATION_MESSAGE);
             } //end view alarm action performed
         });  //end view alarm action listener
-        add(createViewAlarmButton);
+        add(viewAlarmButton);
 
         setVisible(true);
         setSize(350,150);
