@@ -118,7 +118,7 @@ public class Alarm extends Clock implements Serializable{
      */
     public void setMeridien(String meridien)
     {
-        if(alarmMeridien.equals("AM") || alarmMeridien.equals("PM"))
+        if(meridien.equals("AM") || meridien.equals("PM"))
             this.alarmMeridien = meridien;
         else
             badData += "Invalid meridien value\n";
@@ -249,7 +249,7 @@ public class Alarm extends Clock implements Serializable{
      */
     public void ring(){
         JOptionPane.showMessageDialog(null, toString(), "Alarm", JOptionPane.INFORMATION_MESSAGE);
-        AudioFilePlayer.playAudio("path");
+        //AudioFilePlayer.playAudio("path");
     }
 
 }

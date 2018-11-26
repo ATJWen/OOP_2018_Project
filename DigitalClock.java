@@ -80,7 +80,7 @@ public class DigitalClock extends JFrame{
                 createAlarmPanel.add(jtaMessage);
 
                 JButton confirmAlarm = new JButton("Create Alarm");
-                confirmAlarm.addActionListener(new ActionListener() {  //begin confirmAlarm Action Listener
+                confirmAlarm.addActionListener(new ActionListener(){  //begin confirmAlarm Action Listener
                     @Override
                     public void actionPerformed(ActionEvent e) { //begin confirmAlarm action performed
                         int tfHourInt = Integer.parseInt(tfHour.getText());
@@ -105,7 +105,7 @@ public class DigitalClock extends JFrame{
                             alarmList.add(newAlarm);
                             //Writing to a file
                             try{
-                                ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fileName));
+                                ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(fileName, true));
                                 os.writeObject(newAlarm);
                                 os.close();
                             }
