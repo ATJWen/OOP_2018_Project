@@ -249,7 +249,7 @@ public class Alarm extends Clock implements Serializable{
      */
     public void ring(){
         JOptionPane.showMessageDialog(null, toString(), "Alarm", JOptionPane.INFORMATION_MESSAGE);
-        //AudioFilePlayer.playAudio();
+        AudioFilePlayer.playAudio("path");
     }
 
 }

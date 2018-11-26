@@ -8,32 +8,12 @@ import java.util.Timer;
 import java.util.ArrayList;
 import java.util.TimerTask;
 
-/*JB Advice - these are things you could add to your application to beef it up
- *
- *ensure that no 2 Alarm objects have values that are exactly the same values
- *
- *allow a "snooze" feature on your alarm so that, when it goes off, you have the choice to snooze for
- *a certain amount of time before it goes off again - the user could be allowed to enter the snooze time
- *if you like
- *
- *When the alarm does go off, and should the user decide to "stop" rather than "snooze" then the alarm
- *object should be removed from the array list of Alarm objects
- *
- *Fix up the validation so that the user cannot set alarm for days and months in the past
- *
- *Play an audio file when the alarm goes off - you could have your alarm set up so that the
- *user is given the choice to wake up to a "beep"-type sound or a song (could be randomised)
- *You can use the AudioFilePlayer class to play the sound file
- *
- */
-
 public class DigitalClock extends JFrame{
 
-    String fileName = "AlarmFile.bin";
     JLabel jlabClock;
     private static ArrayList<Alarm> alarmList = new ArrayList<>();
 
-    public DigitalClock(){ //Begin DigitalClock class
+    public DigitalClock(){ //Begin DigitalClock constructor
         jlabClock = new JLabel("Time");
         setLayout(new FlowLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,6 +23,7 @@ public class DigitalClock extends JFrame{
         pack();
         setLocationRelativeTo(null);
         ClockThread ct = new ClockThread(this);
+        String fileName = "AlarmFile.bin";
 
         getContentPane().setBackground(Color.BLACK);
         jlabClock.setForeground(Color.GREEN);
