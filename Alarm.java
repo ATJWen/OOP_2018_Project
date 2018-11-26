@@ -61,10 +61,8 @@ public class Alarm extends Clock implements Serializable{
 
     /**
      * @param day the day for the alarm
-     * @param month the month that the alarm is set. Used for validation purposes
-     * @param year the year that the alarm is set. Used for validation purposes
      */
-    public void setDay(int day, int month, int year){
+    public void setDay(int day){
         //YearMonth yearMonthObject = YearMonth.of(year, month); //code from javapointstutorials.com
         //int daysInMonth = yearMonthObject.lengthOfMonth();
 
@@ -116,12 +114,12 @@ public class Alarm extends Clock implements Serializable{
 
     /**
      *
-     * @param alarmMeridien the meridien for the alarm. either AM or PM
+     * @param meridien the meridien for the alarm. either AM or PM
      */
-    public void setAlarmMeridien(String alarmMeridien)
+    public void setMeridien(String meridien)
     {
         if(alarmMeridien.equals("AM") || alarmMeridien.equals("PM"))
-            this.alarmMeridien = alarmMeridien;
+            this.alarmMeridien = meridien;
         else
             badData += "Invalid meridien value\n";
     }
@@ -152,11 +150,11 @@ public class Alarm extends Clock implements Serializable{
     //Small modification by JB to fix logical error
 
     /**
-     * @param alarmMessage the message to be saved with the alarm
+     * @param message the message to be saved with the alarm
      */
-    public void setAlarmMessage(String alarmMessage){
+    public void setMessage(String message){
         if(alarmMessage.equals("")){
-            this.alarmMessage = alarmMessage;
+            this.alarmMessage = message;
         }//end if
         else{
             this.alarmMessage = "No message";

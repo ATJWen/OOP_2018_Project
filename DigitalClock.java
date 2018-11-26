@@ -112,15 +112,15 @@ public class DigitalClock extends JFrame{
                         newAlarm.setSecond(tfSecondInt);
                         newAlarm.setMinute(tfMinuteInt);
                         newAlarm.setHour(tfHourInt);
-                        newAlarm.setDay(tfDayInt, Integer.parseInt(tfMonth.getText()), tfYearInt);
+                        newAlarm.setDay(tfDayInt);
                         newAlarm.setMonth(tfMonthInt);
                         newAlarm.setYear(tfYearInt);
-                        newAlarm.setAlarmMeridien(meridienBoxString);
+                        newAlarm.setMeridien(meridienBoxString);
 
                         //JB Modified code - updated test from using == to using .equals() here
                         if(newAlarm.getBadData().equals("")) { //saves alarm into arraylist if no badData is found
                             newAlarm.setAlarmTime(tfYearInt, tfMonthInt, tfDayInt, tfHourInt, tfMinuteInt, tfSecondInt,meridienBoxString);
-                            newAlarm.setAlarmMessage(jtaMessage.getText());
+                            newAlarm.setMessage(jtaMessage.getText());
                             alarmList.add(newAlarm);
                             //Writing to a file
                             try{
@@ -140,6 +140,7 @@ public class DigitalClock extends JFrame{
                             //Shows a message indicating the object was saved
                             JOptionPane.showMessageDialog(null, "Alarm set to " + newAlarm.getAlarmTimeString(), "Success", JOptionPane.INFORMATION_MESSAGE);
                             alarmGUI.dispatchEvent(new WindowEvent(alarmGUI, WindowEvent.WINDOW_CLOSING));
+
                         }else{  //displays error message
                             JOptionPane.showMessageDialog(null, newAlarm.getBadData(), "Invalid Data", JOptionPane.INFORMATION_MESSAGE);
                             newAlarm.setBadData();
@@ -169,6 +170,8 @@ public class DigitalClock extends JFrame{
                     for(Alarm list : alarmList){
                         allAlarmList += list.toString();
                     } //end for loop to print arraylist
+
+                    alarmList.clear();
                 }
 
                 catch(FileNotFoundException e1){
